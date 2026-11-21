@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fin Buddy AI Assistant UX process — Understand, Define, Ideate, Design, and Test.">
+  <title>Fin Buddy — UX Process</title>
+  <style>
+    :root {
+      --canvas: #f3f0ee;
+      --surface: #fcfbfa;
+      --white: #ffffff;
+      --ink: #141413;
+      --charcoal: #262627;
+      --muted: #696969;
+      --dust: #d1cdc7;
+      --line: #cec7bf;
+      --signal: #cf4500;
+      --signal-light: #f37338;
+      --link: #3860be;
+      --success: #176b43;
+      --shadow-soft: 0 24px 48px rgba(20, 20, 19, 0.08);
+      --shadow-nav: 0 4px 24px rgba(20, 20, 19, 0.06);
+      --radius-button: 20px;
+      --radius-panel: 40px;
+      --radius-pill: 999px;
+      --content: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: "Sofia Sans", "Inter", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--signal-light);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: -80px;
+      z-index: 100;
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      color: var(--white);
+      transition: top 160ms ease;
+    }
+    .skip-link:focus { top: 12px; }
+
+    .nav-wrap {
+      position: sticky;
+      top: 18px;
+      z-index: 50;
+      width: min(calc(100% - 32px), var(--content));
+      margin: 18px auto 0;
+    }
+    .nav {
+      position: relative;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 12px 18px 12px 26px;
+      border: 1px solid rgba(20, 20, 19, 0.08);
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow-nav);
+      backdrop-filter: blur(18px);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      position: relative;
+      width: 42px;
+      height: 30px;
+    }
+    .brand-mark::before, .brand-mark::after {
+      content: "";
+      position: absolute;
+      top: 1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      opacity: 0.94;
+    }
+    .brand-mark::before { left: 0; background: var(--signal); }
+    .brand-mark::after { right: 0; background: #e8a219; mix-blend-mode: multiply; }
+    .nav-links {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(16px, 2.5vw, 42px);
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      font-size: 15px;
+    }
+    .nav-links a:hover { color: var(--signal); }
+    .workflow-link {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .workflow-link:hover { color: var(--signal); }
+    .nav-cta, .pill-button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 22px;
+      border: 1.5px solid var(--ink);
+      border-radius: var(--radius-button);
+      background: var(--ink);
+      color: var(--canvas);
+      font: inherit;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-cta { border-color: var(--signal); background: var(--signal); }
+    .nav-cta:hover, .pill-button:hover { transform: translateY(-1px); }
+    .menu-button { display: none; }
+
+    .chat-widget {
+      position: fixed;
+      z-index: 100;
+      right: 28px;
+      bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      width: min(540px, calc(100vw - 32px));
+      height: min(750px, calc(100dvh - 110px));
+      overflow: hidden;
+      border: 1px solid rgba(21, 16, 77, 0.16);
+      border-radius: 24px;
+      background: var(--white);
+      box-shadow: 0 18px 60px rgba(20, 20, 19, 0.2);
+    }
+    .chat-widget[hidden] { display: none; }
+    .chat-widget-head {
+      display: flex;
+      flex: 0 0 58px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px 0 24px;
+      background: var(--signal);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .chat-widget-close {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .chat-widget-close:hover { background: rgba(255,255,255,.14); }
+    .chat-widget iframe { width: 100%; flex: 1; min-height: 0; border: 0; background: #fff; }
+
+    .workflow-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      overflow-y: auto;
+      background: var(--canvas);
+      padding: 28px clamp(16px, 4vw, 56px) 56px;
+    }
+    .workflow-panel[hidden] { display: none; }
+    .workflow-shell { width: min(1280px, 100%); margin: 0 auto; }
+    .workflow-topline { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:34px; }
+    .workflow-brand { display:flex; align-items:center; gap:12px; font-weight:750; }
+    .workflow-close { border:1px solid var(--line); border-radius:999px; background:var(--surface); color:var(--ink); min-height:44px; padding:9px 18px; font:inherit; font-weight:650; cursor:pointer; }
+    .workflow-hero { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr); gap:36px; align-items:end; padding:clamp(26px,5vw,58px); border-radius:36px; background:var(--ink); color:var(--white); }
+    .workflow-hero h1 { max-width:760px; margin:14px 0; font-size:clamp(42px,6.5vw,78px); line-height:.98; letter-spacing:-.055em; }
+    .workflow-hero p { max-width:650px; color:#d4d0ca; font-size:18px; }
+    .workflow-stat { border-left:1px solid #ffffff42; padding:4px 0 4px 24px; color:#e5e1dc; }
+    .workflow-stat strong { display:block; color:white; font-size:48px; line-height:1; }
+    .workflow-kicker { color:var(--signal-light); text-transform:uppercase; letter-spacing:.12em; font-size:12px; font-weight:750; }
+    .workflow-block { margin-top:54px; }
+    .workflow-block-head { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:20px; }
+    .workflow-block h2 { margin:0; font-size:clamp(28px,3.5vw,42px); letter-spacing:-.04em; }
+    .workflow-block-head p { margin:0; color:var(--muted); max-width:560px; }
+    .pipeline { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:12px; counter-reset:step; }
+    .lifecycle-pipeline { grid-template-columns:repeat(5,minmax(0,1fr)); }
+    .pipeline-card { position:relative; min-height:178px; padding:20px 18px; border:1px solid var(--line); border-radius:24px; background:var(--surface); }
+    .pipeline-card:not(:last-child)::after { content:"→"; position:absolute; right:-15px; top:46%; z-index:2; color:var(--signal); font-size:22px; font-weight:800; }
+    .pipeline-card .step { color:var(--signal); font-size:12px; font-weight:800; letter-spacing:.12em; }
+    .pipeline-card h3 { margin:12px 0 8px; font-size:18px; line-height:1.15; }
+    .pipeline-card p { margin:0; color:var(--muted); font-size:13px; }
+    .pipeline-card.crew-step { border-color:#e29b7c; background:#fff9f6; }
+    .agent-grid,.skill-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+    .workflow-card { border:1px solid var(--line); border-radius:24px; background:var(--surface); padding:21px; }
+    .workflow-card .card-index { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#f7dfd4; color:#8e3000; font-size:12px; font-weight:800; }
+    .workflow-card h3 { margin:14px 0 8px; font-size:18px; }
+    .workflow-card p { margin:0; color:var(--muted); font-size:14px; }
+    .skill-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .skill-card { min-height:120px; }
+    .gate-track { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px; }
+    .gate-card { border-top:4px solid var(--success); border-radius:0 0 18px 18px; background:var(--surface); padding:18px 16px; }
+    .gate-card.action { border-top-color:var(--signal-light); }
+    .gate-id { color:var(--muted); font:700 11px ui-monospace,Consolas,monospace; letter-spacing:.08em; }
+    .gate-card h3 { margin:9px 0 12px; font-size:16px; }
+    .gate-status { display:inline-flex; padding:5px 9px; border-radius:999px; background:#e5f1e9; color:#176b43; font-size:11px; font-weight:700; }
+    .gate-card.action .gate-status { background:#fff0e9; color:#9b3e0d; }
+    .faq-groups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .faq-group { border:1px solid var(--line); border-radius:20px; background:var(--surface); padding:0 18px; }
+    .faq-group summary { cursor:pointer; padding:18px 0; font-weight:700; }
+    .faq-group summary span { float:right; color:var(--signal); font-size:13px; }
+    .faq-group ul { margin:0; padding:0 0 18px 20px; color:#4b4946; }
+    .faq-group li { padding:5px 0; }
+    .workflow-note { margin-top:24px; border-left:4px solid var(--signal); border-radius:0 16px 16px 0; background:var(--surface); padding:16px 20px; color:#56514c; }
+
+    main { overflow: hidden; }
+    .hero {
+      position: relative;
+      width: min(calc(100% - 40px), var(--content));
+      min-height: 680px;
+      margin: 28px auto 0;
+      padding: clamp(54px, 8vw, 110px) clamp(28px, 6vw, 84px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      align-items: center;
+      gap: 56px;
+      border-radius: var(--radius-panel);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero::before {
+      content: "FIN BUDDY";
+      position: absolute;
+      left: -24px;
+      bottom: -42px;
+      color: #e8e2da;
+      font-size: clamp(72px, 14vw, 190px);
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      line-height: 0.82;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .hero-copy, .hero-visual { position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--signal);
+    }
+    h1, h2, h3 { margin-top: 0; letter-spacing: -0.03em; }
+    h1 {
+      max-width: 760px;
+      margin-bottom: 26px;
+      font-size: clamp(48px, 6.2vw, 84px);
+      font-weight: 600;
+      line-height: 0.98;
+    }
+    .hero-copy > p {
+      max-width: 650px;
+      margin: 0 0 30px;
+      color: var(--charcoal);
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 450;
+      line-height: 1.45;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .pill-button.secondary {
+      background: var(--white);
+      color: var(--ink);
+    }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 9px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: var(--canvas);
+      font-weight: 650;
+    }
+    .status-chip::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .hero-visual {
+      min-height: 430px;
+      display: grid;
+      place-items: center;
+    }
+    .orbit {
+      position: relative;
+      width: min(440px, 100%);
+      aspect-ratio: 1;
+      border: 1.5px solid var(--signal-light);
+      border-radius: 50%;
+      transform: rotate(-10deg);
+    }
+    .orbit::before, .orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(243, 115, 56, 0.52);
+      border-radius: 50%;
+      inset: 15%;
+    }
+    .orbit::after { inset: 31%; }
+    .orbit-core {
+      position: absolute;
+      inset: 25%;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--canvas);
+      text-align: center;
+      transform: rotate(10deg);
+      box-shadow: 0 32px 70px rgba(20, 20, 19, 0.18);
+    }
+    .orbit-core strong { display: block; font-size: 48px; line-height: 1; }
+    .orbit-core span { display: block; margin-top: 8px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .node {
+      position: absolute;
+      width: 76px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      border: 8px solid var(--surface);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--ink);
+      font-weight: 800;
+      transform: rotate(10deg);
+      box-shadow: 0 12px 30px rgba(20, 20, 19, 0.11);
+    }
+    .node:nth-child(2) { top: 3%; left: 16%; }
+    .node:nth-child(3) { top: 18%; right: -1%; }
+    .node:nth-child(4) { right: 10%; bottom: 5%; }
+    .node:nth-child(5) { bottom: 10%; left: 2%; }
+    .node:nth-child(6) { top: 33%; left: -8%; }
+
+    .process-intro {
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+      padding: 150px 0 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .process-intro h2 {
+      margin-bottom: 0;
+      font-size: clamp(42px, 5vw, 68px);
+      font-weight: 600;
+      line-height: 1.02;
+    }
+    .process-intro p {
+      margin: 0;
+      color: var(--charcoal);
+      font-size: 19px;
+      line-height: 1.55;
+    }
+
+    .phase-section {
+      position: relative;
+      padding: 90px 0 120px;
+    }
+    .phase-section:nth-of-type(even) { background: var(--surface); }
+    .phase-inner {
+      position: relative;
+      width: min(calc(100% - 40px), var(--content));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: clamp(44px, 7vw, 100px);
+      align-items: start;
+    }
+    .phase-section:nth-of-type(odd) .phase-inner { grid-template-columns: minmax(0, 1fr) 360px; }
+    .phase-section:nth-of-type(odd) .phase-orbit-card { order: 2; }
+    .phase-section:nth-of-type(odd) .phase-content { order: 1; }
+    .phase-watermark {
+      position: absolute;
+      top: -62px;
+      left: 2vw;
+      color: var(--phase-whisper, #e8e2da);
+      font-size: clamp(74px, 12vw, 168px);
+      font-weight: 700;
+      letter-spacing: -0.065em;
+      line-height: .9;
+      pointer-events: none;
+      white-space: nowrap;
+      opacity: .75;
+    }
+    .phase-orbit-card {
+      position: sticky;
+      top: 120px;
+      width: 100%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--phase-color, var(--ink));
+      color: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+    .phase-number {
+      position: absolute;
+      top: 22%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .82;
+    }
+    .phase-icon {
+      font-size: 58px;
+      line-height: 1;
+    }
+    .satellite {
+      position: absolute;
+      right: -6px;
+      bottom: 38px;
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 28px;
+      text-decoration: none;
+      box-shadow: 0 12px 25px rgba(20, 20, 19, .12);
+    }
+    .phase-content {
+      position: relative;
+      z-index: 1;
+      padding-top: 78px;
+    }
+    .phase-content h2 {
+      margin-bottom: 22px;
+      font-size: clamp(38px, 4.6vw, 62px);
+      font-weight: 600;
+      line-height: 1;
+    }
+    .phase-summary {
+      max-width: 770px;
+      color: var(--charcoal);
+      font-size: 19px;
+      line-height: 1.55;
+    }
+    .phase-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0;
+    }
+    .meta-pill {
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: var(--white);
+      color: var(--charcoal);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    details.phase-details {
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    details.phase-details summary {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      font-weight: 750;
+      list-style: none;
+    }
+    details.phase-details summary::-webkit-details-marker { display: none; }
+    details.phase-details summary::after {
+      content: "+";
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-size: 22px;
+      font-weight: 450;
+    }
+    details.phase-details[open] summary::after { content: "−"; }
+    .markdown-body {
+      padding: 8px 0 32px;
+      color: var(--charcoal);
+    }
+    .markdown-body h2, .markdown-body h3 {
+      margin: 30px 0 12px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .markdown-body h3 { font-size: 19px; }
+    .markdown-body p { margin: 0 0 16px; }
+    .markdown-body ul { margin: 0 0 20px; padding-left: 22px; }
+    .markdown-body li { margin: 8px 0; }
+    .markdown-body code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #e8e2da;
+      color: var(--ink);
+      font-size: .92em;
+    }
+    .markdown-body strong { color: var(--ink); }
+    .limitation {
+      margin-top: 26px;
+      padding: 20px 22px;
+      border-left: 4px solid var(--signal);
+      border-radius: 0 20px 20px 0;
+      background: rgba(255, 255, 255, .66);
+      font-size: 14px;
+    }
+    .phase-error {
+      padding: 20px;
+      border: 1px solid var(--signal);
+      border-radius: 20px;
+      background: #fff7f2;
+      color: #7a2700;
+    }
+
+    .results {
+      width: min(calc(100% - 40px), var(--content));
+      margin: 40px auto 120px;
+      padding: clamp(36px, 6vw, 72px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      border-radius: var(--radius-panel);
+      background: var(--ink);
+      color: var(--white);
+      box-shadow: 0 40px 80px rgba(20, 20, 19, .2);
+    }
+    .results h2 { font-size: clamp(40px, 5vw, 64px); line-height: 1; }
+    .results p { color: #d6d3cf; font-size: 18px; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .metric {
+      min-height: 150px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, .04);
+    }
+    .metric strong { font-size: 42px; line-height: 1; }
+    .metric span { color: #c7c3be; font-size: 13px; font-weight: 750; letter-spacing: .05em; text-transform: uppercase; }
+
+    footer {
+      padding: 86px max(24px, calc((100vw - var(--content)) / 2)) 120px;
+      background: var(--ink);
+      color: var(--white);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 60px;
+      padding-bottom: 54px;
+      border-bottom: 1px solid rgba(255, 255, 255, .26);
+    }
+    .footer-top h2 {
+      max-width: 700px;
+      margin-bottom: 0;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 1;
+      font-weight: 600;
+    }
+    .footer-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; align-content: end; }
+    .footer-links a { color: var(--white); text-underline-offset: 4px; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 28px;
+      color: #bdb9b4;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .nav-links { display: none; }
+      .nav-links.is-open { position:absolute; top:calc(100% + 8px); left:0; right:0; display:flex; flex-direction:column; align-items:stretch; gap:2px; padding:12px; border:1px solid var(--line); border-radius:22px; background:var(--surface); box-shadow:var(--shadow-nav); }
+      .nav-links.is-open a,.nav-links.is-open .workflow-link { padding:10px 12px; text-align:left; }
+      .nav { justify-content: space-between; }
+      .menu-button { display: inline-flex; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 350px; }
+      .orbit { width: min(360px, 90%); }
+      .process-intro { grid-template-columns: 1fr; gap: 24px; }
+      .phase-inner, .phase-section:nth-of-type(odd) .phase-inner { grid-template-columns: 280px minmax(0, 1fr); }
+      .phase-section:nth-of-type(odd) .phase-orbit-card { order: 0; }
+      .phase-section:nth-of-type(odd) .phase-content { order: 0; }
+      .phase-orbit-card { position: relative; top: 0; }
+      .results, .footer-top { grid-template-columns: 1fr; }
+      .workflow-hero { grid-template-columns:1fr; }
+      .pipeline { grid-template-columns:repeat(4,minmax(0,1fr)); }
+      .pipeline-card::after { display:none; }
+      .lifecycle-pipeline { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .pipeline-card:nth-child(4)::after { display:none; }
+      .agent-grid,.skill-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .gate-track { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .nav-wrap { top: 10px; margin-top: 10px; }
+      .nav { min-height: 60px; padding: 8px 10px 8px 18px; gap: 8px; }
+      .brand-text { display: none; }
+      .nav-cta { min-height: 40px; padding: 8px 12px; font-size: 13px; white-space: nowrap; }
+      .menu-button {
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ink);
+        border-radius: 50%;
+        background: var(--white);
+        font-size: 20px;
+      }
+      .chat-widget { right: 12px; bottom: 12px; width: calc(100vw - 24px); height: min(700px, calc(100dvh - 88px)); border-radius: 20px; }
+      .nav-links.is-open { position:absolute; top:calc(100% + 8px); left:0; right:0; display:flex; flex-direction:column; align-items:stretch; gap:2px; padding:12px; border:1px solid var(--line); border-radius:22px; background:var(--surface); box-shadow:var(--shadow-nav); }
+      .nav-links.is-open a,.nav-links.is-open .workflow-link { padding:10px 12px; text-align:left; }
+      .workflow-panel { padding:18px 14px 36px; }
+      .workflow-topline { margin-bottom:18px; }
+      .workflow-hero { padding:28px 22px; border-radius:26px; }
+      .workflow-hero p { font-size:16px; }
+      .workflow-block { margin-top:38px; }
+      .workflow-block-head { align-items:start; flex-direction:column; }
+      .pipeline { grid-template-columns:1fr 1fr; }
+      .lifecycle-pipeline { grid-template-columns:1fr 1fr; }
+      .pipeline-card { min-height:150px; }
+      .pipeline-card::after { display:none; }
+      .gate-track { grid-template-columns:1fr 1fr; }
+      .faq-groups { grid-template-columns:1fr; }
+      .hero { width: min(calc(100% - 24px), var(--content)); min-height: auto; padding: 58px 24px 72px; border-radius: 32px; }
+      h1 { font-size: clamp(44px, 14vw, 62px); }
+      .hero-actions { align-items: stretch; flex-direction: column; }
+      .pill-button, .status-chip { width: 100%; }
+      .hero-visual { min-height: 300px; }
+      .node { width: 60px; height: 60px; border-width: 6px; }
+      .orbit-core strong { font-size: 36px; }
+      .process-intro { padding-top: 100px; }
+      .phase-section { padding: 72px 0 92px; }
+      .phase-inner, .phase-section:nth-of-type(odd) .phase-inner { grid-template-columns: 1fr; }
+      .phase-orbit-card { width: min(300px, 84vw); margin: 0 auto; }
+      .phase-content { padding-top: 36px; }
+      .phase-watermark { top: -28px; left: -4px; font-size: clamp(62px, 23vw, 110px); }
+      .phase-section:nth-of-type(odd) .phase-orbit-card { order: 0; }
+      .phase-section:nth-of-type(odd) .phase-content { order: 0; }
+      .results { grid-template-columns: 1fr; padding: 34px 24px; border-radius: 32px; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .footer-links { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="nav-wrap">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Fin Buddy home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Fin Buddy</span>
+      </a>
+      <div class="nav-links">
+        <a href="#understand">Understand</a>
+        <a href="#define">Define</a>
+        <a href="#ideate">Ideate</a>
+        <a href="#design">Design</a>
+        <a href="#test">Test</a>
+        <button class="workflow-link" id="open-ai-workflow" type="button" aria-controls="ai-workflow-panel" aria-expanded="false">AI Workflow</button>
+      </div>
+      <button class="nav-cta" id="open-finbuddy-chat" type="button" aria-haspopup="dialog" aria-controls="finbuddy-chat-widget" aria-expanded="false">Finbuddy Chat</button>
+      <button class="menu-button" type="button" aria-label="Open phase navigation" aria-expanded="false">☰</button>
+    </nav>
+  </div>
+
+  <section class="chat-widget" id="finbuddy-chat-widget" role="dialog" aria-modal="false" aria-label="Fin Buddy chat" hidden>
+    <header class="chat-widget-head"><span>Fin Buddy</span><button class="chat-widget-close" id="close-finbuddy-chat" type="button" aria-label="Close chat">×</button></header>
+    <iframe title="Fin Buddy FAQ chat" src="Fin_Buddy_FAQ_Chatbot.html?embed=1"></iframe>
+  </section>
+
+  <section class="workflow-panel" id="ai-workflow-panel" role="dialog" aria-modal="true" aria-labelledby="workflow-title" hidden>
+    <div class="workflow-shell">
+      <div class="workflow-topline">
+        <div class="workflow-brand"><span class="brand-mark" aria-hidden="true"></span><span>Fin Buddy · AI Workflow</span></div>
+        <button class="workflow-close" id="close-ai-workflow" type="button">Close ×</button>
+      </div>
+      <header class="workflow-hero">
+        <div>
+          <span class="workflow-kicker">People-guided · FAQ-grounded · Traceable</span>
+          <h1 id="workflow-title">A thoughtful path from question to answer.</h1>
+          <p>See how Fin Buddy combines purpose-built UX roles, reusable skills, human review gates, and a four-agent CrewAI chat workflow.</p>
+        </div>
+        <div class="workflow-stat"><strong>7 · 7 · 6 · 25</strong>UX agents · skills · human gates · FAQ answers</div>
+      </header>
+
+      <section class="workflow-block" aria-labelledby="chat-pipeline-title">
+        <div class="workflow-block-head"><div><span class="workflow-kicker">Live chatbot architecture</span><h2 id="chat-pipeline-title">One question. Seven deliberate steps.</h2></div><p>The FAQ chatbot checks safety first, uses the local FAQ as its factual source, and applies deterministic grounding and escalation rules at the end.</p></div>
+        <div class="pipeline">
+          <article class="pipeline-card"><span class="step">01 · INPUT</span><h3>User question</h3><p>A plain-language question enters the Fin Buddy chat.</p></article>
+          <article class="pipeline-card"><span class="step">02 · SAFETY</span><h3>Pre-check</h3><p>Blocks secret requests, unsafe actions, and prompt attacks before AI.</p></article>
+          <article class="pipeline-card crew-step"><span class="step">03 · CREWAI</span><h3>Classify</h3><p>Routes intent into an FAQ category or marks it unknown.</p></article>
+          <article class="pipeline-card crew-step"><span class="step">04 · CREWAI</span><h3>Find FAQ facts</h3><p>Searches the local 25-question FAQ and attaches source IDs.</p></article>
+          <article class="pipeline-card crew-step"><span class="step">05 · CREWAI</span><h3>Draft answer</h3><p>Writes a calm, concise response from supported facts only.</p></article>
+          <article class="pipeline-card crew-step"><span class="step">06 · CREWAI</span><h3>Review & escalate</h3><p>Checks whether a person should follow up; cannot override rules.</p></article>
+          <article class="pipeline-card"><span class="step">07 · FINAL CHECK</span><h3>Validate & reply</h3><p>Confirms sources, enforces policy, then returns the safe answer.</p></article>
+        </div>
+        <div class="workflow-note"><strong>Grounding rule:</strong> answers come from the Fin Buddy FAQ. Unknown details remain marked for confirmation; the assistant does not invent product facts or provide personalized investment, tax, or legal advice.</div>
+      </section>
+
+      <section class="workflow-block" aria-labelledby="ux-agents-title">
+        <div class="workflow-block-head"><div><span class="workflow-kicker">Project roles</span><h2 id="ux-agents-title">The UX agents behind the experience</h2></div><p>These seven project agents prepare evidence, product decisions, designs, and evaluations. They advise the project; people make gate decisions.</p></div>
+        <div class="agent-grid">
+          <article class="workflow-card"><span class="card-index">01</span><h3>UX Researcher</h3><p>Plans ethical discovery, interviews, and evidence synthesis without inventing findings.</p></article>
+          <article class="workflow-card"><span class="card-index">02</span><h3>Competitive Analyst</h3><p>Compares dated, observable finance-product patterns and opportunities.</p></article>
+          <article class="workflow-card"><span class="card-index">03</span><h3>Product Definition Agent</h3><p>Turns approved evidence into provisional needs, journeys, and MVP priorities.</p></article>
+          <article class="workflow-card"><span class="card-index">04</span><h3>Information Architect</h3><p>Maps navigation, task flows, conversation paths, and recovery states.</p></article>
+          <article class="workflow-card"><span class="card-index">05</span><h3>Product Designer</h3><p>Builds the approved wireframes, interface specification, and prototype states.</p></article>
+          <article class="workflow-card"><span class="card-index">06</span><h3>Usability Evaluator</h3><p>Reviews usability, accessibility, grounding, trust, and recovery behavior.</p></article>
+          <article class="workflow-card"><span class="card-index">07</span><h3>Fintech Risk Reviewer</h3><p>Checks privacy, consent, financial correctness, advice boundaries, and unsafe actions.</p></article>
+        </div>
+      </section>
+
+      <section class="workflow-block" aria-labelledby="skills-title">
+        <div class="workflow-block-head"><div><span class="workflow-kicker">Reusable methods</span><h2 id="skills-title">Skills applied across the phases</h2></div><p>Each skill file defines a repeatable method and the evidence or deliverable expectations for that work.</p></div>
+        <div class="skill-grid">
+          <article class="workflow-card skill-card"><span class="card-index">01</span><h3>UX Research Planning</h3><p>Turn assumptions into neutral, ethical research questions.</p></article>
+          <article class="workflow-card skill-card"><span class="card-index">02</span><h3>UX Research Synthesis</h3><p>Build traceable needs while preserving uncertainty.</p></article>
+          <article class="workflow-card skill-card"><span class="card-index">03</span><h3>Competitive Experience Analysis</h3><p>Compare observable finance experiences with dated evidence.</p></article>
+          <article class="workflow-card skill-card"><span class="card-index">04</span><h3>Journey & Service Mapping</h3><p>Connect user touchpoints with backstage product responsibilities.</p></article>
+          <article class="workflow-card skill-card"><span class="card-index">05</span><h3>Information Architecture</h3><p>Organize content, tasks, permissions, and safe exits.</p></article>
+          <article class="workflow-card skill-card"><span class="card-index">06</span><h3>Interaction & Interface Design</h3><p>Specify accessible screens, states, and prototype behavior.</p></article>
+          <article class="workflow-card skill-card"><span class="card-index">07</span><h3>Usability & AI Evaluation</h3><p>Review usability, accessibility, grounding, and safety.</p></article>
+        </div>
+      </section>
+
+      <section class="workflow-block" aria-labelledby="phase-gates-title">
+        <div class="workflow-block-head"><div><span class="workflow-kicker">Human decision points</span><h2 id="phase-gates-title">Six gates keep people in control</h2></div><p>Agents can prepare recommendations, but they cannot approve gates. Changes and unresolved actions stay visible between phases.</p></div>
+        <div class="gate-track">
+          <article class="gate-card"><span class="gate-id">HG-00</span><h3>Project intake</h3><span class="gate-status">Approved</span></article>
+          <article class="gate-card"><span class="gate-id">HG-01</span><h3>Understand review</h3><span class="gate-status">Approved</span></article>
+          <article class="gate-card"><span class="gate-id">HG-02</span><h3>Define review</h3><span class="gate-status">Approved</span></article>
+          <article class="gate-card"><span class="gate-id">HG-03</span><h3>Ideate review</h3><span class="gate-status">Approved</span></article>
+          <article class="gate-card action"><span class="gate-id">HG-04</span><h3>Design review</h3><span class="gate-status">Approved with actions</span></article>
+          <article class="gate-card action"><span class="gate-id">HG-05</span><h3>Test & output review</h3><span class="gate-status">Approved with actions</span></article>
+        </div>
+      </section>
+
+      <section class="workflow-block" aria-labelledby="lifecycle-title">
+        <div class="workflow-block-head"><div><span class="workflow-kicker">UX lifecycle</span><h2 id="lifecycle-title">From discovery to test</h2></div><p>The lifecycle moves through five phases, with human review before meaningful progression and output authorization.</p></div>
+        <div class="pipeline lifecycle-pipeline">
+          <article class="pipeline-card"><span class="step">PHASE 01</span><h3>Understand</h3><p>Research plan, evidence boundaries, assumptions, and risks.</p></article>
+          <article class="pipeline-card"><span class="step">PHASE 02</span><h3>Define</h3><p>Provisional needs, personas, journeys, and MVP scope.</p></article>
+          <article class="pipeline-card"><span class="step">PHASE 03</span><h3>Ideate</h3><p>Concepts, flows, information architecture, and trade-offs.</p></article>
+          <article class="pipeline-card"><span class="step">PHASE 04</span><h3>Design</h3><p>Wireframes, high-fidelity specification, and prototype states.</p></article>
+          <article class="pipeline-card"><span class="step">PHASE 05</span><h3>Test</h3><p>Specification review, synthetic checks, limits, and next tests.</p></article>
+        </div>
+      </section>
+
+      <section class="workflow-block" aria-labelledby="faq-list-title">
+        <div class="workflow-block-head"><div><span class="workflow-kicker">Local knowledge source</span><h2 id="faq-list-title">The 25 FAQ questions you created</h2></div><p>Open a category to see its questions. The chatbot uses these FAQs as its only factual product source.</p></div>
+        <div class="faq-groups">
+          <details class="faq-group"><summary>Getting Started and About Fin Buddy <span>04 QUESTIONS</span></summary><ul><li>What is Fin Buddy?</li><li>Who is Fin Buddy for?</li><li>What can Fin Buddy help me do?</li><li>Which devices can I use Fin Buddy on?</li></ul></details>
+          <details class="faq-group"><summary>Trust, Privacy and Data Security <span>04 QUESTIONS</span></summary><ul><li>Is my data safe?</li><li>Do I need to link my bank account?</li><li>Do you sell my data?</li><li>Who can see my financial information?</li></ul></details>
+          <details class="faq-group"><summary>The AI Assistant: what it can and can't do <span>04 QUESTIONS</span></summary><ul><li>What does the Fin Buddy AI Assistant do?</li><li>Can the AI make mistakes?</li><li>Does the AI give financial advice?</li><li>Are the AI's answers reviewed by a person?</li></ul></details>
+          <details class="faq-group"><summary>Budget Calculator <span>03 QUESTIONS</span></summary><ul><li>What is the budget calculator?</li><li>What information do I need for the budget calculator?</li><li>Will the budget calculator tell me how much I must spend or save?</li></ul></details>
+          <details class="faq-group"><summary>Expense Tracker <span>03 QUESTIONS</span></summary><ul><li>What does the expense tracker do?</li><li>Are expenses added automatically?</li><li>Can I correct or delete an expense?</li></ul></details>
+          <details class="faq-group"><summary>Building Savings and Investing Habits <span>03 QUESTIONS</span></summary><ul><li>Can Fin Buddy help me start saving?</li><li>Can Fin Buddy help me learn about investing?</li><li>Does Fin Buddy guarantee that I will save money or earn an investment return?</li></ul></details>
+          <details class="faq-group"><summary>Account, Pricing and Support <span>04 QUESTIONS</span></summary><ul><li>Is Fin Buddy free?</li><li>Which countries, regions and currencies does Fin Buddy support?</li><li>What happens if I delete my account?</li><li>How can I contact Fin Buddy support?</li></ul></details>
+        </div>
+        <div class="workflow-note"><strong>Known product facts stay honest:</strong> platforms, pricing, supported regions and currencies, data practices, and support contact remain marked “NEEDS CONFIRMATION” in the FAQ until confirmed.</div>
+      </section>
+    </div>
+  </section>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Fin Buddy AI Assistant</p>
+        <h1 id="hero-title">A financial AI experience designed around trust.</h1>
+        <p>Explore the five-stage UX process behind a provisional, read-only assistant that makes financial calculations inspectable, correctable, and easier to understand.</p>
+        <div class="hero-actions">
+          <a class="pill-button" href="#process">View the process</a>
+          <a class="pill-button secondary" href="./Fin_Buddy_UX_Design_Specification.md">Open design specification</a>
+          <span class="status-chip">35 synthetic checks passed</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Five connected UX phases">
+        <div class="orbit" aria-hidden="true">
+          <div class="orbit-core"><div><strong>5</strong><span>Connected phases</span></div></div>
+          <span class="node">01</span>
+          <span class="node">02</span>
+          <span class="node">03</span>
+          <span class="node">04</span>
+          <span class="node">05</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="process-intro" id="process" aria-labelledby="process-title">
+      <div>
+        <p class="eyebrow">The orchestrator journey</p>
+        <h2 id="process-title">One decision at a time, with human gates throughout.</h2>
+      </div>
+      <p>Each phase is sourced from its own <code>FINAL_OUTPUT.md</code> file and embedded into this page so it works when opened directly or served over HTTP. The page keeps provisional findings, approval boundaries, and testing limitations visible instead of presenting the concept as a finished product.</p>
+    </section>
+
+    <div id="phase-container" aria-live="polite"></div>
+
+    <section class="results" aria-labelledby="results-title">
+      <div>
+        <p class="eyebrow">Synthetic evaluation</p>
+        <h2 id="results-title">Specification depth, without pretending it is production proof.</h2>
+        <p>The arithmetic harness passed all controlled checks. Usability, accessibility, model behavior, security, privacy, compliance, and live financial correctness remain explicitly unvalidated.</p>
+        <a class="pill-button secondary" href="./Fin_Buddy_Synthetic_Evaluation_Report.md">Read evaluation report</a>
+      </div>
+      <div class="metric-grid" aria-label="Evaluation metrics">
+        <div class="metric"><strong>35</strong><span>Checks passed</span></div>
+        <div class="metric"><strong>0</strong><span>Checks failed</span></div>
+        <div class="metric"><strong>5</strong><span>UX phases</span></div>
+        <div class="metric"><strong>30</strong><span>Wireframe states</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <h2>Build the next decision on evidence—not assumptions.</h2>
+      <div class="footer-links">
+        <a href="./README.md">Output manifest ↗</a>
+        <a href="./Fin_Buddy_Risks_and_Next_Steps.md">Risks and next steps ↗</a>
+        <a href="./01-understand/FINAL_OUTPUT.md">Research output ↗</a>
+        <a href="./05-test/FINAL_OUTPUT.md">Test output ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Fin Buddy UX Process · Internal provisional work</span>
+      <span>External publication requires separate human authorization.</span>
+    </div>
+  </footer>
+
+  <script>
+    const phases = [
+      { id: 'understand', number: '01', title: 'Understand', icon: '⌕', color: '#d69b00', whisper: '#eadfc8', path: './01-understand/FINAL_OUTPUT.md' },
+      { id: 'define', number: '02', title: 'Define', icon: '◇', color: '#a81918', whisper: '#ead9d6', path: './02-define/FINAL_OUTPUT.md' },
+      { id: 'ideate', number: '03', title: 'Ideate', icon: '✦', color: '#075fba', whisper: '#d9e3ec', path: './03-ideate/FINAL_OUTPUT.md' },
+      { id: 'design', number: '04', title: 'Design', icon: '✎', color: '#b40978', whisper: '#ead8e4', path: './04-design/FINAL_OUTPUT.md' },
+      { id: 'test', number: '05', title: 'Test', icon: '✓', color: '#0a9441', whisper: '#d7e7dc', path: './05-test/FINAL_OUTPUT.md' }
+    ];
+
+    const embeddedPhaseMarkdown = {"understand":"# Phase 01 Final Output — Understand\n\n**INTERNAL PROVISIONAL — SPECIFICATION AND SYNTHETIC EVALUATION ONLY**\n\n**Sharing:** Internal only. External publication requires separate human review and authorization.\n\n## Phase result\n\nThe Understand phase established the research plan, evidence boundaries, competitive patterns, assumptions, unknowns, and fintech discovery risks for the Fin Buddy AI Assistant.\n\n## Completed work\n\n- Separated documented BRD facts from hypotheses and unknowns.\n- Defined prioritized research questions for spending comprehension, budget questions, savings planning, consent, evidence, correction, trust, accessibility, and advice boundaries.\n- Proposed eight moderated interviews using synthetic scenarios and no live financial data.\n- Defined participant criteria, recruitment constraints, consent, redaction, retention, withdrawal, and analysis requirements.\n- Created a non-leading interview guide and evidence thresholds.\n- Reviewed Monarch Money, Rocket Money, Cleo, and Google Wallet using dated public sources.\n- Identified opportunities for inspectable evidence, editable source data, correction, scoped permission, freshness, read-only boundaries, privacy controls, and explicit accessibility targets.\n- Completed the Phase 01 fintech risk register.\n\n## Evidence status\n\nNo interviews, observations, surveys, or usability tests occurred. No participant quotes or validated user findings exist. All user-problem statements remain hypotheses.\n\n## Human decision\n\nHG-01 was approved by the project owner with an explicit instruction to proceed provisionally. Later phases must not represent assumptions as validated research.\n\n## Supporting files\n\n- `PHASE.md`\n- `phase-01-research-plan.md`\n- `phase-01-competitive-analysis.md`\n- `phase-01-risk-register.md`\n- `HG-01-understand-review.md`\n\n## Mandatory limitation\n\nThis phase does not establish user need, prevalence, task success, trust, accessibility, or product-market fit.\n","define":"# Phase 02 Final Output — Define\n\n**INTERNAL PROVISIONAL — SPECIFICATION AND SYNTHETIC EVALUATION ONLY**\n\n**Sharing:** Internal only. External publication requires separate human review and authorization.\n\n## Phase result\n\nThe Define phase converted the approved BRD and desk research into a provisional product definition, three assumption-based proto-personas, empathy hypotheses, journey maps, MVP priorities, success measures, and risk conditions.\n\n## Provisional problem statement\n\nAdults who actively monitor recurring finances may have difficulty turning transaction, category, and budget data into a timely explanation they can verify. Fin Buddy should test whether a consent-based, read-only conversational layer can reduce this interpretation effort through deterministic results, contributing records, explicit periods, assumptions, limitations, correction, accessibility, and clear advice boundaries.\n\n## Proto-personas\n\n- Routine Spending Reviewer\n- Household Budget Coordinator\n- Goal-Oriented Financial Planning Newcomer\n\nThese are low-confidence proto-personas—not validated personas. No invented quotations, prevalence, demographic capability assumptions, or validated emotions are included.\n\n## Prioritized needs\n\n- Explain spending and budget results with drill-down evidence.\n- Find and correct source data.\n- Understand data scope, freshness, permission, and retention.\n- Receive clear limitations when intent or data is insufficient.\n- Separate education, scenarios, and regulated advice.\n- Support accessible, plain-language use.\n- Provide editable savings assumptions and opt-in insights.\n\n## MVP boundary\n\nThe MVP remains read-only. Payments, transfers, investing, loans, credit decisions, autonomous budget/account changes, personalized tax/legal advice, and unsupported real-time claims remain excluded.\n\n## Human decision\n\nHG-02 was approved for provisional ideation with the research gap and risk controls carried forward.\n\n## Supporting files\n\n- `PHASE.md`\n- `phase-02-product-definition.md`\n- `phase-02-proto-personas-empathy.md`\n- `phase-02-journey-map.md`\n- `phase-02-risk-review.md`\n- `HG-02-define-review.md`\n\n## Mandatory limitation\n\nNo persona, empathy statement, need, journey, or priority in this phase has been validated with participants.\n","ideate":"# Phase 03 Final Output — Ideate\n\n**INTERNAL PROVISIONAL — SPECIFICATION AND SYNTHETIC EVALUATION ONLY**\n\n**Sharing:** Internal only. External publication requires separate human review and authorization.\n\n## Phase result\n\nThe Ideate phase selected a provisional dual-path hybrid architecture: direct finance experiences remain primary, contextual assistance supports visible tasks, and a global Ask Fin Buddy hub supports broader or multi-turn questions.\n\n## Architecture principles\n\n- Every assistant-supported task retains a direct non-chat route where the product supports it.\n- Context, period, accounts, filters, and data scope are visible and editable before retrieval.\n- General education works without personal financial-data consent.\n- Retrieval, filtering, evidence, and financial calculations are deterministic.\n- AI may interpret intent and explain supplied results but cannot alter financial values or invent causality.\n- Correction of intent and correction of source data remain separate.\n- Untrusted transaction text remains inert and cannot change permissions, tools, or scope.\n- The MVP remains read-only.\n\n## Use-case flows\n\n- Monthly spending summary with evidence and correction\n- Budget Q&A with formula and direct budget route\n- Transaction search with visible filters and no-result recovery\n- General education with a separate personalization transition\n- Savings scenario with editable assumptions and no guarantee\n\n## Required states\n\nConsent lifecycle, stale/partial/missing/conflicting data, ambiguity, deterministic failure, restricted advice, malicious record text, correction, recalculation, history/deletion, permission withdrawal, feedback, support, accessibility, proactive insight opt-in, and safe exit.\n\n## Human decision\n\nHG-03 approved annotated low-fidelity work. High-fidelity design remained gated until wireframe review.\n\n## Supporting files\n\n- `PHASE.md`\n- `phase-03-information-architecture.md`\n- `phase-03-task-conversation-flows.md`\n- `phase-03-concept-options.md`\n- `phase-03-risk-review.md`\n- `HG-03-ideate-review.md`\n\n## Mandatory limitation\n\nThe selected concept and flows are provisional and have not been evaluated with users or an implemented system.\n","design":"# Phase 04 Final Output — Design\n\n**INTERNAL PROVISIONAL — SPECIFICATION AND SYNTHETIC EVALUATION ONLY**\n\n**Sharing:** Internal only. External publication requires separate human review and authorization.\n\n## Phase result\n\nThe Design phase produced 30 annotated structural wireframes, traceability across UC-01–05 and BR-01–10, a provisional high-fidelity design specification, component and state requirements, a CTA scope map, prototype routes, accessibility intent, proactive-insight opt-in, and fintech risk reviews.\n\n## Key design decisions\n\n- Direct screens remain primary; assistant hub and contextual entry share rules.\n- Deterministic financial result, AI explanation, evidence, freshness, and limitations are visually and semantically distinct.\n- Evidence is reachable without another AI question.\n- `Change question` does not modify source data; `Correct data` uses a confirmed canonical service.\n- Consent choices remain neutral, optional scopes begin off, and denial preserves useful routes.\n- Permission withdrawal, conversation deletion, history deletion, and account-data requests remain separate.\n- Transaction descriptions render as inert untrusted data.\n- Restricted financial advice and excluded actions fail safely.\n- Proactive insight cards require PI-00–PI-06 opt-in and control flow.\n\n## Design-system intent\n\n- Calm, neutral, information-first hierarchy\n- Provisional semantic colors, typography, spacing, and density\n- WCAG 2.2 AA contrast intent\n- Keyboard, focus, screen-reader status, zoom/reflow, non-color, reduced-motion, and direct-control requirements\n- Responsive mobile, tablet, and desktop behavior\n\n## Prototype scope\n\nContextual spending, hub budget, transaction search, education, savings, proactive insights, consent lifecycle, data failures, restricted advice, malicious text, privacy/deletion, feedback/support, accessibility behavior, and exact return-to-origin.\n\n## Human decision\n\nHG-04 Checkpoint A and final review were approved with actions for synthetic specification-based evaluation only.\n\n## Supporting files\n\n- `PHASE.md`\n- `phase-04-low-fidelity-wireframes.md`\n- `phase-04-wireframe-traceability.md`\n- `phase-04-wireframe-risk-review.md`\n- `HG-04-checkpoint-A-review.md`\n- `phase-04-high-fidelity-specification.md`\n- `phase-04-component-prototype-qa.md`\n- `phase-04-cta-map.md`\n- `phase-04-final-risk-review.md`\n- `HG-04-final-review.md`\n\n## Mandatory limitation\n\nNo rendered Figma artifact, interactive-prototype evaluation, production component library, accessibility conformance test, or implemented-service validation exists.\n","test":"# Phase 05 Final Output — Test\n\n**INTERNAL PROVISIONAL — SPECIFICATION AND SYNTHETIC EVALUATION ONLY**\n\n**Sharing:** Internal only. External publication requires separate human review and authorization.\n\n## Phase result\n\nThe Test phase completed an expert specification walkthrough, created fictional golden fixtures, executed deterministic PowerShell checks, recorded issue severity, and defined future usability, accessibility, grounding, privacy, security, and compliance validation.\n\n## Executed result\n\n**35 deterministic assertions passed; 0 failed.**\n\nVerified fictional-data calculations included:\n\n- October spending: ₹31,799\n- November spending: ₹40,698\n- Difference: ₹8,899 / 27.99%\n- November budget: ₹39,500; overrun: ₹1,198\n- Search counts, identifiers, and totals\n- Savings scenarios\n- Category correction invariants\n- Excluded-record recalculation\n- Stale and partial subtotals\n- Currency separation and explicit-rate conversion\n- Malicious-looking record text retained as fixture data\n\n## Specification review result\n\n- UC-01 Spending: partial by specification\n- UC-02 Budget: partial by specification\n- UC-03 Transaction search: pass by specification\n- UC-04 Education: partial by specification\n- UC-05 Savings: pass by specification\n\n`Pass by specification` means required behavior is documented. It does not establish working implementation or usability.\n\n## Unvalidated areas\n\nParticipant task success, content comprehension, visual hierarchy, keyboard/focus, screen readers, zoom/reflow, production grounding, prompt-injection isolation, authorization, retention/deletion, support, notification enforcement, security, privacy, and legal/compliance.\n\n## Human decision\n\nHG-05 approved the internal provisional output package with actions and exact artifact restrictions.\n\n## Supporting files\n\n- `PHASE.md`\n- `phase-05-synthetic-evaluation.md`\n- `phase-05-specification-review.md`\n- `phase-05-risk-review.md`\n- `HG-05-test-review.md`\n\n## Mandatory limitation\n\nSynthetic arithmetic does not establish production financial correctness, validated usability, accessibility conformance, model safety, security, compliance, or production readiness.\n"};
+
+    const escapeHtml = (value) => value
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+
+    function inlineMarkdown(text) {
+      return escapeHtml(text)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    }
+
+    function markdownToHtml(markdown) {
+      const lines = markdown.replace(/\r/g, '').split('\n');
+      const output = [];
+      let listOpen = false;
+
+      const closeList = () => {
+        if (listOpen) {
+          output.push('</ul>');
+          listOpen = false;
+        }
+      };
+
+      for (const raw of lines) {
+        const line = raw.trim();
+        if (!line) { closeList(); continue; }
+        if (line.startsWith('# ')) continue;
+        if (line.startsWith('## ')) {
+          closeList();
+          output.push(`<h2>${inlineMarkdown(line.slice(3))}</h2>`);
+        } else if (line.startsWith('### ')) {
+          closeList();
+          output.push(`<h3>${inlineMarkdown(line.slice(4))}</h3>`);
+        } else if (line.startsWith('- ')) {
+          if (!listOpen) { output.push('<ul>'); listOpen = true; }
+          output.push(`<li>${inlineMarkdown(line.slice(2))}</li>`);
+        } else if (line.startsWith('**INTERNAL PROVISIONAL') || line.startsWith('**Sharing:**')) {
+          closeList();
+        } else {
+          closeList();
+          output.push(`<p>${inlineMarkdown(line)}</p>`);
+        }
+      }
+      closeList();
+      return output.join('');
+    }
+
+    function extractSummary(markdown) {
+      const match = markdown.match(/## Phase result\s+([\s\S]*?)(?=\n## |$)/);
+      return match ? match[1].trim().replace(/\n+/g, ' ') : 'Phase output loaded from the approved orchestrator package.';
+    }
+
+    function extractMeta(markdown) {
+      const bullets = [...markdown.matchAll(/^- (.+)$/gm)].slice(0, 3).map((match) => match[1].replace(/`/g, ''));
+      return bullets.length ? bullets : ['Approved phase output', 'Internal provisional', 'Human-gated'];
+    }
+
+    async function renderPhases() {
+      const container = document.querySelector('#phase-container');
+      const responses = phases.map((phase) => ({ phase, markdown: embeddedPhaseMarkdown[phase.id] }));
+
+      container.innerHTML = responses.map(({ phase, markdown, error }) => {
+        if (error) {
+          return `
+            <section class="phase-section" id="${phase.id}">
+              <div class="phase-inner">
+                <div class="phase-orbit-card" style="--phase-color:${phase.color}"><span class="phase-icon">${phase.icon}</span></div>
+                <div class="phase-content"><h2>${phase.title}</h2><div class="phase-error">Could not read <code>${phase.path}</code>. Serve the output folder through a local HTTP server rather than opening the HTML through <code>file://</code>.</div></div>
+              </div>
+            </section>`;
+        }
+
+        const summary = extractSummary(markdown);
+        const meta = extractMeta(markdown);
+        return `
+          <section class="phase-section" id="${phase.id}" style="--phase-color:${phase.color};--phase-whisper:${phase.whisper}">
+            <span class="phase-watermark" aria-hidden="true">${phase.title}</span>
+            <div class="phase-inner">
+              <div class="phase-orbit-card">
+                <span class="phase-number">Phase ${phase.number}</span>
+                <span class="phase-icon" aria-hidden="true">${phase.icon}</span>
+                <a class="satellite" href="${phase.path}" aria-label="Open ${phase.title} final Markdown">→</a>
+              </div>
+              <div class="phase-content">
+                <p class="eyebrow">Phase ${phase.number}</p>
+                <h2>${phase.title}</h2>
+                <p class="phase-summary">${inlineMarkdown(summary)}</p>
+                <div class="phase-meta">${meta.map((item) => `<span class="meta-pill">${inlineMarkdown(item)}</span>`).join('')}</div>
+                <details class="phase-details">
+                  <summary>Read the approved phase output</summary>
+                  <div class="markdown-body">${markdownToHtml(markdown)}</div>
+                </details>
+                <p class="limitation"><strong>Evidence boundary:</strong> This content is embedded from <code>${phase.path}</code> and retains its internal, provisional status.</p>
+              </div>
+            </div>
+          </section>`;
+      }).join('');
+    }
+
+    const menuButton = document.querySelector('.menu-button');
+    const chatLauncher = document.querySelector('#open-finbuddy-chat');
+    const chatWidget = document.querySelector('#finbuddy-chat-widget');
+    const chatClose = document.querySelector('#close-finbuddy-chat');
+    const workflowLauncher = document.querySelector('#open-ai-workflow');
+    const workflowPanel = document.querySelector('#ai-workflow-panel');
+    const workflowClose = document.querySelector('#close-ai-workflow');
+    function setChatOpen(open) {
+      if (open && !workflowPanel.hidden) {
+        workflowPanel.hidden = true;
+        workflowLauncher.setAttribute('aria-expanded', 'false');
+      }
+      chatWidget.hidden = !open;
+      chatLauncher.setAttribute('aria-expanded', String(open));
+      if (open) chatClose.focus();
+      else chatLauncher.focus();
+    }
+    chatLauncher.addEventListener('click', () => setChatOpen(chatWidget.hidden));
+    chatClose.addEventListener('click', () => setChatOpen(false));
+    function setWorkflowOpen(open) {
+      if (open && !chatWidget.hidden) {
+        chatWidget.hidden = true;
+        chatLauncher.setAttribute('aria-expanded', 'false');
+      }
+      workflowPanel.hidden = !open;
+      workflowLauncher.setAttribute('aria-expanded', String(open));
+      if (open) workflowClose.focus();
+      else workflowLauncher.focus();
+    }
+    workflowLauncher.addEventListener('click', () => setWorkflowOpen(true));
+    workflowClose.addEventListener('click', () => setWorkflowOpen(false));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !workflowPanel.hidden) setWorkflowOpen(false);
+      else if (event.key === 'Escape' && !chatWidget.hidden) setChatOpen(false);
+    });
+    menuButton.addEventListener('click', () => {
+      const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!expanded));
+      document.querySelector('.nav-links').classList.toggle('is-open', !expanded);
+    });
+
+    renderPhases();
+  </script>
+</body>
+</html>

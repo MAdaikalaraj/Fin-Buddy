@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f1fa">
+  <title>Fin Buddy · Your money companion</title>
+  <style>
+    :root{font-family:Poppins,"Segoe UI",Arial,sans-serif;color:#111;background:#f2f1fa;font-synthesis:none}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#f2f1fa}.phone{width:min(100%,430px);min-height:100svh;margin:auto;position:relative;background:#f2f1fa;overflow:hidden}.status{height:26px;padding:5px 18px 0;display:flex;align-items:center;justify-content:space-between;color:#15104d;font:600 14px Inter,"Segoe UI",sans-serif}.status-icons{display:flex;align-items:center;gap:5px}.status-icons img{display:block;object-fit:contain}.status-icons img:nth-child(1){width:18px;height:12px}.status-icons img:nth-child(2){width:16px;height:12px}.status-icons img:nth-child(3){width:25px;height:12px}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#15104d}.icon-button{display:grid;place-items:center;width:40px;height:40px;border:0;background:transparent;color:#15104d;cursor:pointer;border-radius:50%}.icon-button:hover{background:#e5e3f3}.icon-button img{width:24px;height:24px;object-fit:contain}.welcome{min-height:calc(100svh - 88px);display:flex;align-items:center;flex-direction:column;text-align:center;padding:15vh 48px 36px}.mascot{width:107px;height:146px;object-fit:contain;margin-bottom:38px}.welcome h1{font-size:24px;line-height:1.15;font-weight:500;margin:0 0 24px}.welcome p{font-size:14px;line-height:1.5;letter-spacing:-.21px;margin:0 0 28px;max-width:258px}.primary{width:148px;height:40px;border:1px solid #15104d;border-radius:2px;background:#15104d;color:white;font:500 16px Poppins,"Segoe UI",sans-serif;letter-spacing:.15px;cursor:pointer}.primary:hover{background:#241d70}.chat-view{display:none;min-height:calc(100svh - 88px);height:calc(100svh - 88px);flex-direction:column;padding:4px 16px 14px}.chat-heading{font-size:20px;font-weight:500;margin:2px 4px 2px;color:#15104d}.chat-hint{font-size:12px;color:#625f78;margin:0 4px 14px}.suggestions{display:flex;gap:8px;overflow-x:auto;padding:0 2px 12px;scrollbar-width:none}.suggestion{flex:none;border:1px solid #b9b5d0;background:#fff;color:#15104d;border-radius:18px;padding:8px 12px;font:500 12px Poppins,"Segoe UI",sans-serif;cursor:pointer}.transcript{flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:8px 2px 14px}.message{max-width:88%;padding:12px 14px;border-radius:16px;font-size:14px;line-height:1.48;white-space:pre-wrap;overflow-wrap:anywhere}.message.bot{align-self:flex-start;background:#fff;color:#211d36;border:1px solid #e1dfed;border-bottom-left-radius:5px}.message.user{align-self:flex-end;background:#15104d;color:#fff;border-bottom-right-radius:5px}.message small{display:block;color:#77718e;margin-top:8px;font:11px Inter,"Segoe UI",sans-serif}.composer{display:flex;gap:8px;align-items:end;padding-top:10px;border-top:1px solid #d9d6e7}.composer textarea{flex:1;min-height:44px;max-height:112px;resize:none;border:1px solid #c7c3d8;border-radius:14px;padding:11px 12px;background:#fff;font:14px Poppins,"Segoe UI",sans-serif;outline-color:#15104d}.send{width:44px;height:44px;border:0;border-radius:50%;background:#15104d;color:#fff;font-size:20px;cursor:pointer}.send:disabled{opacity:.5;cursor:wait}.disclaimer{text-align:center;color:#77718e;font:10px Inter,"Segoe UI",sans-serif;padding:8px 4px 0}.hidden{display:none!important}@media(min-height:900px){.welcome{padding-top:18vh}}@media(max-height:650px){.welcome{padding-top:7vh}.mascot{width:86px;height:117px;margin-bottom:18px}.welcome h1{margin-bottom:16px}.welcome p{margin-bottom:18px}}
+  </style>
+</head>
+<body>
+<main class="phone">
+  <div class="status" aria-label="Device status bar"><span>9:41</span><div class="status-icons" aria-hidden="true"><img src="/static/assets/mascot/cellular.svg" alt=""><img src="/static/assets/mascot/wifi.svg" alt=""><img src="/static/assets/mascot/battery.svg" alt=""></div></div>
+  <header class="topbar"><button class="icon-button" id="back" aria-label="Back"><img src="/static/assets/mascot/arrow-back.svg" alt=""></button><button class="icon-button" aria-label="More options"><img src="/static/assets/mascot/more-vert.svg" alt=""></button></header>
+  <section class="welcome" id="welcome">
+    <img class="mascot" src="/static/assets/mascot/fin-buddy.png" alt="Fin Buddy mascot">
+    <h1>You are all set</h1>
+    <p>Remember, you can always get in touch with me by simply tapping the FinBuddy icon located in the bottom left corner</p>
+    <button class="primary" id="start">start</button>
+  </section>
+  <section class="chat-view" id="chat" aria-label="Fin Buddy chat">
+    <h1 class="chat-heading">Ask Fin Buddy</h1>
+    <p class="chat-hint">A helpful companion for everyday money questions.</p>
+    <div class="suggestions" aria-label="Suggested questions">
+      <button class="suggestion">What is the budget calculator?</button>
+      <button class="suggestion">What does the expense tracker do?</button>
+      <button class="suggestion">Can Fin Buddy help me start saving?</button>
+    </div>
+    <div class="transcript" id="transcript" aria-live="polite"><div class="message bot">Hi, I’m Fin Buddy. Ask me about budgeting, day-to-day spending, or building saving habits. I’ll answer from the Fin Buddy FAQ and let you know when it doesn’t have enough information.</div></div>
+    <form class="composer" id="form"><textarea id="question" rows="1" maxlength="2000" placeholder="Type your question…" aria-label="Your question"></textarea><button class="send" id="send" type="submit" aria-label="Send question">↑</button></form>
+    <div class="disclaimer">Education and guidance only · Not professional financial advice</div>
+  </section>
+</main>
+<script>
+  const welcome=document.querySelector('#welcome'), chat=document.querySelector('#chat'), transcript=document.querySelector('#transcript'), input=document.querySelector('#question'), form=document.querySelector('#form'), send=document.querySelector('#send');
+  function openChat(){welcome.style.display='none';chat.style.display='flex';input.focus()}
+  document.querySelector('#start').addEventListener('click',openChat);
+  document.querySelector('#back').addEventListener('click',()=>{if(chat.style.display==='flex'){chat.style.display='none';welcome.style.display='flex'}});
+  function addMessage(text,kind,meta=''){const item=document.createElement('div');item.className=`message ${kind}`;item.textContent=text;if(meta){const detail=document.createElement('small');detail.textContent=meta;item.append(detail)}transcript.append(item);transcript.scrollTop=transcript.scrollHeight;return item}
+  async function ask(message){if(!message)return;addMessage(message,'user');input.value='';send.disabled=true;const pending=addMessage('One moment…','bot');try{const response=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});if(!response.ok)throw new Error('I could not answer just now. Please try again.');const data=await response.json();pending.remove();const meta=[data.escalated?'Team follow-up may be needed':'',data.source_faq_ids?.length?`FAQ ${data.source_faq_ids.join(', ')}`:''].filter(Boolean).join(' · ');addMessage(data.response,'bot',meta)}catch(error){pending.textContent=error.message}finally{send.disabled=false;input.focus()}}
+  form.addEventListener('submit',event=>{event.preventDefault();ask(input.value.trim())});
+  input.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();form.requestSubmit()}});
+  document.querySelectorAll('.suggestion').forEach(button=>button.addEventListener('click',()=>ask(button.textContent)));
+</script>
+</body>
+</html>

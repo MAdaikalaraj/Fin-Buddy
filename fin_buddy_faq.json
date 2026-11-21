@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0",
+  "dataset_name": "Fin Buddy AI Assistant FAQ",
+  "language": "en-IN",
+  "updated_on": "2026-11-15",
+  "total_questions": 25,
+  "fields": {
+    "id": "Unique question identifier",
+    "category": "FAQ category",
+    "question": "User-facing question",
+    "answer": "Crisp chatbot response",
+    "link_text": "CTA label",
+    "url": "Relevant Fin Buddy webpage"
+  },
+  "questions": [
+    {
+      "id": "fin_buddy_001",
+      "category": "Getting Started and About Fin Buddy",
+      "question": "What is Fin Buddy?",
+      "answer": "Fin Buddy is a financial management app that helps you understand your money and build healthier habits. It includes an AI assistant, a budget calculator and an expense tracker.",
+      "link_text": "Know more",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_002",
+      "category": "Getting Started and About Fin Buddy",
+      "question": "Who is Fin Buddy for?",
+      "answer": "Fin Buddy is designed for everyday people, including first-time budgeters and beginner savers and investors. You do not need financial experience to use it.",
+      "link_text": "Know more",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_003",
+      "category": "Getting Started and About Fin Buddy",
+      "question": "What can Fin Buddy help me do?",
+      "answer": "Fin Buddy can help you manage day-to-day spending, create a budget, track expenses and build saving and investing habits. It acts as a supportive companion without judging or shaming you.",
+      "link_text": "Explore Fin Buddy",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_004",
+      "category": "Getting Started and About Fin Buddy",
+      "question": "Which devices can I use Fin Buddy on?",
+      "answer": "The supported platforms are [NEEDS CONFIRMATION]. Please confirm whether Fin Buddy is available on iOS, Android, the web or a combination of these platforms.",
+      "link_text": "Check availability",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_005",
+      "category": "Trust, Privacy and Data Security",
+      "question": "Is my data safe?",
+      "answer": "Details about Fin Buddy's security controls and encryption are [NEEDS CONFIRMATION]. Before using the app, you should be able to see clearly how your information is protected and who can access it.",
+      "link_text": "Read privacy information",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_006",
+      "category": "Trust, Privacy and Data Security",
+      "question": "Do I need to link my bank account?",
+      "answer": "Whether Fin Buddy supports or requires linked bank accounts is [NEEDS CONFIRMATION]. It is also [NEEDS CONFIRMATION] whether you can enter all transactions manually.",
+      "link_text": "Learn about data connections",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_007",
+      "category": "Trust, Privacy and Data Security",
+      "question": "Do you sell my data?",
+      "answer": "Whether Fin Buddy sells or shares user data is [NEEDS CONFIRMATION]. This must be stated clearly in the product's privacy information before users provide financial data.",
+      "link_text": "Read privacy information",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_008",
+      "category": "Trust, Privacy and Data Security",
+      "question": "Who can see my financial information?",
+      "answer": "Who can view or access your information is [NEEDS CONFIRMATION]. This includes whether authorised Fin Buddy staff, service providers or other parties may access it and under what conditions.",
+      "link_text": "Read privacy information",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_009",
+      "category": "The AI Assistant: what it can and can't do",
+      "question": "What does the Fin Buddy AI Assistant do?",
+      "answer": "The AI assistant helps you understand financial information and supports tasks within Fin Buddy. Its exact features, data access and limits are [NEEDS CONFIRMATION].",
+      "link_text": "Learn about the AI assistant",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_010",
+      "category": "The AI Assistant: what it can and can't do",
+      "question": "Can the AI make mistakes?",
+      "answer": "Yes. AI can misunderstand a question, miss important details or produce an incorrect answer, so you should check important information before acting on it. Whether Fin Buddy shows its sources or calculations is [NEEDS CONFIRMATION].",
+      "link_text": "Learn about AI limitations",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_011",
+      "category": "The AI Assistant: what it can and can't do",
+      "question": "Does the AI give financial advice?",
+      "answer": "Fin Buddy provides financial education and general guidance, not professional financial, investment, tax or legal advice. It does not promise returns or guarantee that you will reach a financial goal.",
+      "link_text": "Learn about AI limitations",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_012",
+      "category": "The AI Assistant: what it can and can't do",
+      "question": "Are the AI's answers reviewed by a person?",
+      "answer": "Whether a person reviews any AI answers is [NEEDS CONFIRMATION]. Do not assume an answer has been checked by a financial professional unless Fin Buddy clearly says that it has.",
+      "link_text": "Learn how the AI works",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_013",
+      "category": "Budget Calculator",
+      "question": "What is the budget calculator?",
+      "answer": "The budget calculator helps you compare the money coming in with the money going out. It can support day-to-day planning and help you see where changes may be possible.",
+      "link_text": "Explore the budget calculator",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_014",
+      "category": "Budget Calculator",
+      "question": "What information do I need for the budget calculator?",
+      "answer": "You will generally need details about your income and expenses, but the exact required information is [NEEDS CONFIRMATION]. Only enter information you are comfortable sharing.",
+      "link_text": "Explore the budget calculator",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_015",
+      "category": "Budget Calculator",
+      "question": "Will the budget calculator tell me how much I must spend or save?",
+      "answer": "The budget calculator can help you explore a budget, but it should not make financial decisions for you. Any suggested amounts depend on the information entered and may not reflect every part of your situation.",
+      "link_text": "Explore the budget calculator",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_016",
+      "category": "Expense Tracker",
+      "question": "What does the expense tracker do?",
+      "answer": "The expense tracker helps you record and review day-to-day spending. It can make spending patterns easier to notice without judging your choices.",
+      "link_text": "Explore the expense tracker",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_017",
+      "category": "Expense Tracker",
+      "question": "Are expenses added automatically?",
+      "answer": "Whether expenses come from a linked bank account or must be entered manually is [NEEDS CONFIRMATION]. If both options are available, Fin Buddy should explain what information each option uses.",
+      "link_text": "Explore the expense tracker",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_018",
+      "category": "Expense Tracker",
+      "question": "Can I correct or delete an expense?",
+      "answer": "Whether you can edit or delete an expense is [NEEDS CONFIRMATION]. Fin Buddy should provide a clear way to correct inaccurate information because reports may depend on it.",
+      "link_text": "Explore the expense tracker",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_019",
+      "category": "Building Savings and Investing Habits",
+      "question": "Can Fin Buddy help me start saving?",
+      "answer": "Fin Buddy can support the habit of saving by helping you understand your budget and spending. The specific saving tools and goal features available are [NEEDS CONFIRMATION].",
+      "link_text": "Explore saving habits",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_020",
+      "category": "Building Savings and Investing Habits",
+      "question": "Can Fin Buddy help me learn about investing?",
+      "answer": "Fin Buddy is intended to help beginners build their financial knowledge and investing habits. The exact educational content and investing features are [NEEDS CONFIRMATION].",
+      "link_text": "Explore investing education",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_021",
+      "category": "Building Savings and Investing Habits",
+      "question": "Does Fin Buddy guarantee that I will save money or earn an investment return?",
+      "answer": "No. Your results depend on many factors, and investment values can rise or fall. Fin Buddy does not guarantee savings, profits or any other financial outcome.",
+      "link_text": "Learn about financial risk",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_022",
+      "category": "Account, Pricing and Support",
+      "question": "Is Fin Buddy free?",
+      "answer": "Fin Buddy's pricing model and any subscription price are [NEEDS CONFIRMATION]. The product should clearly explain which features are free and which require payment before you subscribe.",
+      "link_text": "View pricing",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_023",
+      "category": "Account, Pricing and Support",
+      "question": "Which countries, regions and currencies does Fin Buddy support?",
+      "answer": "Supported countries, regions and currencies are [NEEDS CONFIRMATION]. Check that your location and currency are supported before entering financial information.",
+      "link_text": "Check availability",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_024",
+      "category": "Account, Pricing and Support",
+      "question": "What happens if I delete my account?",
+      "answer": "How account deletion works, what data is removed and how long deletion takes are [NEEDS CONFIRMATION]. Fin Buddy should also explain whether any information must be kept for legal or security reasons.",
+      "link_text": "Manage your account",
+      "url": "[NEEDS CONFIRMATION]"
+    },
+    {
+      "id": "fin_buddy_025",
+      "category": "Account, Pricing and Support",
+      "question": "How can I contact Fin Buddy support?",
+      "answer": "The support email address or in-app support option is [NEEDS CONFIRMATION]. When asking for help, avoid sharing passwords, verification codes or other sensitive details unless the official support process clearly requires them.",
+      "link_text": "Contact support",
+      "url": "[NEEDS CONFIRMATION]"
+    }
+  ]
+}
