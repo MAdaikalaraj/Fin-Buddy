@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fin Buddy public FAQ demo">
+  <title>Fin Buddy · FAQ Demo</title>
+  <style>
+    :root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#161238;background:#f2f1fa}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at top,#fff 0,#f2f1fa 58%)}main{width:min(100%,650px);min-height:680px;background:#fff;border:1px solid #e1dfed;border-radius:28px;box-shadow:0 24px 60px #19154a1a;display:flex;flex-direction:column;overflow:hidden}header{padding:26px 28px 18px;border-bottom:1px solid #e9e7f0}h1{font-size:25px;margin:0;color:#15104d}header p{margin:7px 0 0;color:#625f78;font-size:14px}.suggestions{display:flex;gap:8px;overflow:auto;padding:14px 22px;border-bottom:1px solid #eee}.suggestion{flex:none;border:1px solid #b9b5d0;background:#fff;color:#15104d;border-radius:18px;padding:8px 12px;font:600 12px Inter,Arial;cursor:pointer}.suggestion:hover{background:#f2f1fa}.transcript{flex:1;overflow:auto;padding:22px;display:flex;flex-direction:column;gap:12px}.message{max-width:88%;padding:12px 14px;border-radius:16px;font-size:14px;line-height:1.5;white-space:pre-wrap}.bot{align-self:flex-start;background:#f5f4fa;color:#211d36;border-bottom-left-radius:5px}.user{align-self:flex-end;background:#15104d;color:#fff;border-bottom-right-radius:5px}.source{display:block;font-size:11px;color:#77718e;margin-top:7px}.composer{display:flex;gap:8px;padding:15px 18px;border-top:1px solid #e9e7f0}.composer input{flex:1;min-width:0;border:1px solid #c7c3d8;border-radius:14px;padding:12px 13px;font:14px Inter,Arial;outline-color:#15104d}.composer button{border:0;border-radius:14px;background:#15104d;color:#fff;padding:0 18px;font-weight:700;cursor:pointer}.note{margin:0;padding:0 20px 18px;color:#77718e;font-size:11px;text-align:center}@media(max-width:580px){body{padding:0}main{min-height:100vh;border:0;border-radius:0}}
+  </style>
+</head>
+<body>
+  <main>
+    <header><h1>Ask Fin Buddy</h1><p>A helpful companion for everyday money questions.</p></header>
+    <div class="suggestions"><button class="suggestion">What is the budget calculator?</button><button class="suggestion">What does the expense tracker do?</button><button class="suggestion">Can Fin Buddy help me start saving?</button></div>
+    <section class="transcript" id="transcript" aria-live="polite"><div class="message bot">Hi, I’m Fin Buddy. Ask me about budgeting, day-to-day spending, or building saving habits. I’ll answer from this demo FAQ.</div></section>
+    <form class="composer" id="form"><input id="question" maxlength="500" autocomplete="off" placeholder="Type your question…" aria-label="Your question"><button type="submit">Send</button></form>
+    <p class="note">Public prototype · Education and guidance only · Not professional financial advice</p>
+  </main>
+  <script>
+    const answers=[
+      {keys:['budget','calculator'],text:'The budget calculator helps you plan income, spending, and savings so you can see how your choices affect your monthly budget.'},
+      {keys:['expense','tracker','spend'],text:'The expense tracker helps you record everyday spending and review categories so you can understand where your money is going.'},
+      {keys:['saving','save'],text:'Fin Buddy can help you explore saving habits and set a simple goal. It does not provide personalised financial advice or guarantee outcomes.'},
+      {keys:['free','price','subscription'],text:'Fin Buddy’s pricing model and any subscription price need confirmation. Please check official product information before subscribing.'}
+    ];
+    const transcript=document.querySelector('#transcript'),form=document.querySelector('#form'),input=document.querySelector('#question');
+    function add(text,kind,source){const item=document.createElement('div');item.className='message '+kind;item.textContent=text;if(source){const note=document.createElement('span');note.className='source';note.textContent=source;item.append(note)}transcript.append(item);transcript.scrollTop=transcript.scrollHeight}
+    function reply(message){const lower=message.toLowerCase(),answer=answers.find(item=>item.keys.some(key=>lower.includes(key)));add(answer?answer.text:'I don’t have enough information in this public demo to answer that accurately. Please use Fin Buddy’s verified support channel for account-specific questions.','bot','FAQ demo')}
+    form.addEventListener('submit',event=>{event.preventDefault();const message=input.value.trim();if(!message)return;add(message,'user');input.value='';reply(message);input.focus()});
+    document.querySelectorAll('.suggestion').forEach(button=>button.addEventListener('click',()=>{input.value=button.textContent;form.requestSubmit()}));
+  </script>
+</body>
+</html>
